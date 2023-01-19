@@ -1,3 +1,10 @@
+import { createPlan } from "./plan.js";
+import { usePlants } from "./field.js";
+import { plantSeeds } from "./tractor.js";
+import { harvestPlants } from "./harvester.js";
+import { Catalog } from "./catalog.js";
+const yearlyPlan = createPlan();
+
 /*          CREATING A HARVEST PLAN
         There is an existing plan.js module in this application that is 
         reponsible for defining 3 rows of crops to be planted. In each 
@@ -21,10 +28,7 @@
         const appropriatelyNamedVariable = theFunctionThatReturnsAValue()   [DONE]
 
         Then use console.log() to output the value of yearlyPlan to the 
-        developer console in Chrome.*///                                    [PASS]
-import { createPlan } from "./plan.js"
-const yearlyPlan = createPlan()
-console.log(yearlyPlan)
+        developer console in Chrome.*/ //                                    [PASS]
 
 /*
             #2 -- SEED INSTRUCTION: CHECKING YOUR LOGIC                     [PASS]
@@ -68,30 +72,45 @@ const WheatSeed = createWheat()
 console.log(WheatSeed)
 //*/
 
-//          TILLING INSTRUCTIONS -- CHECKING YOUR LOGIC                     [FAIL]
+//          TILLING INSTRUCTIONS -- CHECKING YOUR LOGIC                     [PASS]
 /*      Write some temporary test code in the main module to check if your 
-            functions do their job correctly.*/
-//      1. Create a seed object.
-//      2. Invoke addPlant() and specify the seed object as the argument.   [----]
-//      3. Invoke usePlants() and store its return value in a variable.     [----]
-/*      4. Use console.log() to make sure your seed object got added
-            to the array of plants in the field.*///                        [----]
-import { addPlant } from "./field.js"
-const testAddPlant = addPlant(yearlyPlan);
-console.log(testAddPlant);
+            functions do their job correctly.
+        1. Create a seed object.
+        2. Invoke addPlant() and specify the seed object as the argument.   [PASS]
+        3. Invoke usePlants() and store its return value in a variable.     [PASS]
+        4. Use console.log() to make sure your seed object got added
+            to the array of plants in the field.*/ //                        [PASS]
 
-import { usePlants } from "./field.js"
-const testUsePlants = usePlants(testAddPlant);
-console.log(testUsePlants);
-//*/
-
-/*          SOWING THE FIELD -- CHECKING YOUR LOGIC                         [FAIL]
+/*          SOWING THE FIELD -- CHECKING YOUR LOGIC                         [PASS]
         In the main.js module, invoke the function that plants all of 
         the seeds, and then get the plants array from the fields.js 
         module. Then use console.log() to see if the plants array has 
-        been populated correctly.                                           [----]
+        been populated correctly.                                           [PASS]
 */
-import { plantSeeds } from "./tractor.js"
-const testedPlantSeeds = plantSeeds()
-console.log(testedPlantSeeds)
-//*/
+const testTractorPlantSeeds = plantSeeds(yearlyPlan);
+const testUsePlants = usePlants();
+
+/*          HARVESTING INSTRUCTIONS -- CHECKING YOUR LOGIC                  [PASS]
+        In the main.js module, get the array of plants from the field 
+            module, and then harvest them by invoking the appropriate 
+            function that you defined above. Make sure you specify the 
+            array of plants as an argument to the harvesting function.
+
+        Then use console.log() to see your new array of harvested food 
+        to sell.*/ //                                                        [PASS]
+const testHarvestPlants = harvestPlants(testUsePlants);
+
+//          SELLING INSTRUCTIONS -- CHECKING YOUR LOGIC                     [TEST]
+/*      In the main.js module, invoke the Catalog function and make sure 
+        you pass the array of food as an argument. Make sure your web 
+        server is running and refresh the browser. Your DOM should look 
+        similar to the image above.
+
+        Please do not try to make it identical. Just make sure you are 
+        displaying them in a grid layout.*/ //                              [WORK]
+
+console.log(Catalog(testHarvestPlants));
+
+const parentHTMLElement = document.querySelector(".plant");
+
+parentHTMLElement.innerHTML = Catalog(testHarvestPlants);
